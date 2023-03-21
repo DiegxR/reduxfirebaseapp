@@ -74,6 +74,24 @@ export const userCreateAsync = ( {email, password, name} ) =>{
     }
 }
 
+export const verifyCodeAsync = (code) => {
+  return async (dispatch) =>{
+    confirmationResult.confirm(code).then((result)=>{
+        const user = result.user.auth.currentUser;
+        console.log(user)
+        dispatch(loginUser({
+            name: user.displayName, 
+            phoneNumber: user.phoneNumber,
+            userPhoto: user.photoURL
+        },{status: false, message: ''}))
+    }).catch((error) => {
+        console.log(error)
+        dispatch(loginUser({user: {}, error: {status: true, message: error.message}}))
+    })
+  }
+}
+
+
 const toggleLoading = () =>{
     return {
         type: loginTypes.TOGGLE_LOADING
