@@ -38,7 +38,7 @@ const Login = () => {
             {errors.password ? <span className='text-red-500'>{errors.password.message}</span> : <></>}
             <button disabled={loading} className='bg-blue-300 p-3 rounded-md' type='submit'>Iniciar sesion</button>
         </form>
-        {error.status ? <span className=' bg-red-300 p-2  m-5 text-white'>{error.message}</span> : <></>}
+        {error?.status ? <span className=' bg-red-300 p-2  m-5 text-white'>{error?.message}</span> : <></>}
         <h3>¿No tienes un usuario? Puedes <Link to='/register' className='text-blue-500'>Crear uno</Link></h3>
         <div>
             <span>Accerder con: </span> <br/>

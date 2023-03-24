@@ -12,8 +12,8 @@ const initialState = {
     isLogged: false
 }
 
-export const loginReducer = (state = initialState, action ) =>{
-    switch(action.type){
+export const loginReducer = (state = initialState, action) => {
+    switch (action.type) {
         case loginTypes.CREATE_USER:
             return {
                 ...state,
@@ -26,16 +26,16 @@ export const loginReducer = (state = initialState, action ) =>{
                     message: action.payload.error.message
                 }
             }
-    
+
         case loginTypes.LOGIN_USER:
             return {
                 ...action.payload
             }
 
         case loginTypes.LOGOUT_USER:
-            return{
+            return {
                 ...initialState
-            }  
+            }
         case loginTypes.TOGGLE_LOADING:
             return {
                 ...state,
@@ -43,10 +43,32 @@ export const loginReducer = (state = initialState, action ) =>{
             }
         case loginTypes.TOGGLE_LOGIN:
             return {
-               ...state,
+                ...state,
                 isLogged: !state.isLogged
             }
-
+        case loginTypes.UPDATE_USER:
+            return {
+                ...state,
+                user: {
+                    ...state.user,
+                    name: action.payload.user.name,
+                    userPhoto: action.payload.user.photo,
+                },
+                error: {
+                    status: action.payload.error.status,
+                    message: action.payload.error.message,
+                },
+            };
+        case loginTypes.DO_LOGIN:
+            return {
+                ...state,
+                isLogged: action.payload.value
+            };
+        case loginTypes.DO_LOGOUT:
+            return{
+                ...initialState
+            }
+            
         default:
             return state;
     }

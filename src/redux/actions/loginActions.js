@@ -2,7 +2,7 @@ import { createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfi
 import { auth } from "../../firebase/firebaseConfig"
 import { loginTypes } from "../types/loginTypes"
 
-const loginUser = (user, error) =>{
+export const loginUser = (user, error) =>{
     return {
         type: loginTypes.LOGIN_USER,
         payload: {
@@ -11,6 +11,16 @@ const loginUser = (user, error) =>{
         }
     }
 }
+
+export const doLogin = (value) =>{
+    return {
+        type: loginTypes.DO_LOGIN,
+        payload: {
+            value
+        }
+    }
+}
+
 
 export const loginUserAsync = ( {email, password} ) =>{
     return async (dispatch) =>{
@@ -103,3 +113,55 @@ const toggleLogin = () => {
         type: loginTypes.TOGGLE_LOGIN
     }
 }
+
+export const updateProfileAsync = (userInfo) => {
+    return async (dispatch) => {
+      try {
+        await updateProfile(auth.currentUser, {
+          displayName: userInfo.name,
+          photoURL: userInfo.photo,
+        });
+        console.log(auth.currentUser);
+        dispatch(
+          loginUser({
+            user: {
+              name: auth.currentUser.displayName,
+              photo: auth.currentUser.photoURL,
+              },
+              error: {
+                  status: false,
+                  message: ""
+              }
+          })
+        );
+      } catch (err) {
+          console.log(err);
+          dispatch(loginUser({
+              user: {},
+              error: {
+                  status: true,
+                  message: err.message
+              }
+          }))
+      }
+    };
+  };
+
+const doLogout = () =>{
+    return {
+        type: loginTypes.DO_LOGOUT
+    }
+}
+
+export const doLogoutAsync = () =>{
+    return async (dispatch) =>{
+        try {
+            await auth.signOut(auth);
+            dispatch(doLogout());
+        }catch(error){
+            dispatch(doLogout());
+            console.log(error)
+        }
+    }
+}
+

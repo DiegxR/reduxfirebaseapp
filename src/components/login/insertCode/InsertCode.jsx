@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import * as yup from 'yup'
+import { auth } from '../../../firebase/firebaseConfig';
 import { verifyCodeAsync } from '../../../redux/actions/loginActions';
 
 const regex = /^[0-9]{6}$/;
@@ -29,7 +30,16 @@ const InsertCode = () => {
     if(error.status){
       Swal.fire('Ops!', `Ha ocurido un error: ${error.message}`, 'error')
     }else{
-      Swal.fire('Exito!', 'Código verificado exitosamente','success').then(() => navigate('/'))
+      Swal.fire('Exito!', 'Código verificado exitosamente','success').then(() =>{
+        console.log(user);
+        console.log(auth.currentUser);
+        if (auth.currentUser.displayName && auth.currentUser.photoURL) {
+          navigate("/");
+        } else {
+          navigate("/updateprofile");
+        }
+      } 
+      )
     }
   }
 
