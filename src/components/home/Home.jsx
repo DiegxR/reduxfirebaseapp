@@ -1,6 +1,7 @@
 import React from 'react'
 import { useDispatch } from 'react-redux'
 import { doLogoutAsync } from '../../redux/actions/loginActions'
+import FinanzasForm from './finanzasForm/FinanzasForm'
 
 const Home = () => {
   const dispatch = useDispatch()
@@ -11,8 +12,9 @@ const Home = () => {
   return (
     <div>
       <nav>
-        <button onClick={handleLogout} className='p-4 bg-blue-200'>Cerrar sesión</button>
+        <button onClick={handleLogout} className='p-3 bg-red text-white'>Cerrar sesión</button>
       </nav>
+      <FinanzasForm/>
     </div>
   )
 }
