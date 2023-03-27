@@ -25,6 +25,11 @@ export const financesReducer = (state = initialState, action) => {
                 ...state,
                 loading: !state.loading
             }
+        case financesTypes.GET_DOC:
+            return {
+                ...state,
+                finances: [...action.payload]
+            }
         default:
             return state;
     }

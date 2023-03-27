@@ -1,6 +1,7 @@
 import React from 'react'
 import { useForm } from 'react-hook-form'
 import { useDispatch, useSelector } from 'react-redux'
+import { Link } from 'react-router-dom'
 import { saveMovementAsync } from '../../../redux/actions/financesActions'
 import { fileUpload } from '../../../services/service'
 
@@ -19,6 +20,7 @@ const FinanzasForm = () => {
         }))
     }
     /**ANDRES DEJA DE QUITAR LA FRESAAAAAAAAAAAAAAAAAAAAAAA */
+    /**Wili estuvo aquí */
 
   return (
     <section className='p-6'>
@@ -26,13 +28,13 @@ const FinanzasForm = () => {
         <form onSubmit={handleSubmit(onSubmit)} className='flex flex-col p-8 gap-8 bg-neutral-100 formphone'>
         <h1 className='flex self-center  items-end'>Registrar Movimientos   <img
                         className="h-14 w-14 ml-6"
-                        src="https://media.giphy.com/media/MwsLT5fj4c25fIn9Hm/giphy.gif"
-                        alt="phantom"
+                        src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExMDRlOTE5OTYxNTQ4NzNkN2MzY2ZmODNhZGIzZGMxNmQ0MDYyNWRiZCZjdD1z/ePc1IPFswJbjNYkgkF/giphy.gif"
+                        alt="perritu"
                     /></h1>
             <label className='flex flex-col'>
                 Monto
                 <input {...register('price',
-                 {required: 'Este campo es requerido'})} type="text" placeholder="Monto" className='outline-0' />
+                 {required: 'Este campo es requerido'})} type="text" placeholder="Monto" className='outline-0 h-10' />
             </label>
             {errors.price ? <span className='text-red-500'>{errors.price.message}</span> : <></>}
 
@@ -41,7 +43,7 @@ const FinanzasForm = () => {
                     Tipo de movimiento
                 </span>
             
-                <select {...register('type', {
+                <select className='outline-0 h-10 flex items-center' {...register('type', {
                     required: 'Este campo es requerido'
                 })}>
                     <option value="">Selecione un tipo</option>
@@ -55,7 +57,7 @@ const FinanzasForm = () => {
             
             <label className='flex flex-col'>
                 <span>Fecha</span>
-                <input type="date" {...register('date', {required: 'Este campo es requerido'})}/>
+                <input className='outline-0 h-10' type="date" {...register('date', {required: 'Este campo es requerido'})}/>
             </label>
             {errors.date? <span className='text-red-500'>{errors.date.message}</span> : <></>}
             <label className='flex flex-col'>
@@ -64,7 +66,7 @@ const FinanzasForm = () => {
               file:rounded-full file:border-0
               file:text-sm file:font-semibold
               file:bg-violet-50 file:text-indigo-400
-              hover:file:bg-violet-100" />
+              hover:file:bg-violet-100 outline-0" />
             </label>
             {errors.file? <span className='text-red-500'>{errors.file.message}</span> : <></>}
             <label className='flex flex-col'>
@@ -72,9 +74,11 @@ const FinanzasForm = () => {
                 <textarea className='outline-none shadow-md shadow-red-300/50 p-[1em] text-xl' {...register('description', {required: 'Este campo es requerido'})} rows="5"/>
             </label>
             {errors.description? <span className='text-red-500'>{errors.description.message}</span> : <></>}
-            <button disabled={loading} className={`formphone text-white cursor-pointer bg-red-200 rounded-md p-[1em] hover:bg-red-500 transition duration-150 ease-out ${loading ? `opacity-60` : ''}`} type='submit'>{!loading ? 'Registrar' : '⭕'}</button>
+            <button disabled={loading} className={`formphone text-white cursor-pointer bg-red-500 rounded-md p-[1em] hover:bg-red-300 transition duration-150 ease-out ${loading ? `opacity-60` : ''}`} type='submit'>{!loading ? 'Registrar' : '⭕'}</button>
             
             {error.status ? <span>{error.message}</span> : <></>}
+
+            <Link to='/list' className='text-blue-500'>Ver todos los movimientos</Link>
         </form>
     </section>
   )

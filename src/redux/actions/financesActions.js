@@ -1,4 +1,4 @@
-import { addDoc, collection } from "firebase/firestore";
+import { addDoc, collection, getDocs } from "firebase/firestore";
 import { dataBase } from "../../firebase/firebaseConfig";
 import { financesTypes } from "../types/financesTypes";
 
@@ -40,3 +40,26 @@ export const saveMovementAsync = (movement) => {
     }
 }
 
+    const getDoc = (list) =>{
+        return{
+            type: financesTypes.GET_DOC,
+            payload: list
+        }
+    }
+
+export const getDocAsync = () =>{
+    return async(dispatch) =>{
+        try {
+            const movementsCollection = collection(dataBase, collectionName);
+            const docs = await getDocs(movementsCollection)
+            const list = []
+            docs.forEach((doc)=> {
+                list.push({id: doc.id, ...doc.data()})
+            })
+            dispatch(getDoc(list))
+        } catch (error) {
+            dispatch(getDoc([]))
+            console.log(error)
+        }
+    }
+}

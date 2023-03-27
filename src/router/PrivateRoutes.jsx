@@ -5,12 +5,17 @@ import { useNavigate } from 'react-router-dom'
 
 const PrivateRoutes = ({children}) => {
     const navigate = useNavigate()
-    const { isLogged } = useSelector(store => store.login)
+    const { isLogged, loading } = useSelector(store => store.login)
+    
+
+    
     useEffect(() => {
-      if(!isLogged){
-        navigate('/login')
+      if(!loading){
+        if(!isLogged){
+         navigate('/login')
+        }
       }
-    }, [isLogged])
+    }, [isLogged, loading])
     
   return (
     <>

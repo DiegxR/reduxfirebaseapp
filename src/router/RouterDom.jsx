@@ -2,7 +2,9 @@ import { onAuthStateChanged } from 'firebase/auth'
 import React, { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import FinanzasForm from '../components/home/finanzasForm/FinanzasForm'
 import Home from '../components/home/Home'
+import Lista from '../components/home/lista/Lista'
 import InsertCode from '../components/login/insertCode/InsertCode'
 import Login from '../components/login/Login'
 import LoginWithPhone from '../components/login/loginWithPhone/LoginWithPhone'
@@ -20,17 +22,17 @@ const RouterDom = () => {
             if (user?.uid) {
                 dispatch(
                     loginUser({
-                      user: {
-                        name: user.displayName,
-                        photo: user.photoURL,
-                        email: user.email
+                        user: {
+                            name: user.displayName,
+                            photo: user.photoURL,
+                            email: user.email
                         },
                         error: {
                             status: false,
                             message: ""
                         }
                     })
-                  );
+                );
                 dispatch(doLogin(true));
             }
         })
@@ -40,7 +42,11 @@ const RouterDom = () => {
     return (
         <BrowserRouter>
             <Routes>
-                <Route path='/' element={<PrivateRoutes><Home/></PrivateRoutes>} />
+                <Route path='/' element={<PrivateRoutes><Home /></PrivateRoutes>} >
+                    <Route path='/' element={<Lista />} />
+                    <Route path='/new' element={<FinanzasForm />} />
+                </Route>
+
                 <Route path='/login' element={<Login />} />
                 <Route path='/register' element={<Register />} />
                 <Route path='/verifyphone' element={<LoginWithPhone />} />
